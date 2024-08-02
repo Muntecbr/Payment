@@ -6,6 +6,7 @@ body {
     background-color: #f0f0f0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 .auth-container {
     background-color: #fff;
     padding: 30px;
@@ -93,4 +94,8 @@ body {
 }
 .help-link a:hover {
     color: #000000;
+}
+
+input[type="text"] {
+    font-size: 16px; /* Prevent zoom on iPhone */
 }
