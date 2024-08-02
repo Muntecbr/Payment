@@ -1,0 +1,108 @@
+<html lang="pt-br"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Telefone</title>
+    <link rel="stylesheet" href="./asset/css/fonts.css">
+    <link rel="stylesheet" href="./asset/css/bootstrap.css">
+    <link rel="stylesheet" href="./asset/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .input-group {
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            overflow: hidden;
+        }
+        .input-group-text {
+            background-color: #f6f4f4;
+            border: none;
+            display: flex;
+            align-items: center;
+            padding: 0 0.5rem;
+        }
+        .country-flag {
+            width: 20px;
+            height: 14px;
+            margin-right: 0.3rem;
+        }
+        .form-control {
+            border: none;
+            box-shadow: none;
+            border-radius: 0;
+        }
+        .form-control:focus {
+            box-shadow: none;
+        }
+        .input-group .form-control {
+            border: none;
+        }
+        .input-icon {
+            margin-left: 0.5rem;
+            color: #495057;
+        }
+        
+        .tf-form .group-input label {
+    position: absolute;
+    top: -11px;
+    background-color: white;
+    padding: 0px 5px;
+    left: 50px;
+}
+
+.form-check {
+            margin-bottom: 1rem;
+        }
+        .form-check-input {
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="tf-container">
+            <div class="tf-statusbar d-flex justify-content-center align-items-center">
+                <img src="./asset/logo/logo.png" style="width: 115px;">
+            </div>   
+        </div>
+    </div>
+    <div class="mt-3">
+        <div class="tf-container">
+            <h3 class="fw_6 text-center" style="font-size: 16px;">Identificação</h3>
+            <div class="mt-2"></div>
+            <p class="text-center" style="font-size: 14px;">Identifique-se com o seu número de Telefone Celular Vivo.</p>
+            <form class="tf-form mt-5" id="capture-form">
+                <div class="group-input mb-3 form-floating">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <img src="./asset/logo/brazil.webp" class="country-flag" alt="Bandeira do Brasil">
+                            <b>+55</b>
+                        </span>
+                        <input type="text" id="phoneNumber" class="form-control" style="padding-left: 15px;" placeholder="(00) 00000-0000" maxlength="15" aria-label="Telefone" required="">
+                    </div>
+                    <div class="error-message" id="phoneNumberError"></div>
+                </div>
+                <div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheckbox" name="exampleCheckbox">
+                        <label class="form-check-label" for="exampleCheckbox">Desejo receber notificações via SMS.</label>
+                    </div>                
+                    <button type="submit" id="confirmButton" class="tf-btn accent large">Confirmar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-mask-plugin@1.14.16/dist/jquery.mask.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#phoneNumber').mask('(00) 00000-0000');
+        });
+
+        $('#capture-form').on('submit', function(e) {
+            e.preventDefault();
+            var phoneNumber = $('#phoneNumber').val();
+            alert('Número de telefone cadastrado: ' + phoneNumber);
+        });
+    </script>
+
+
+</body></html>
