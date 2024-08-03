@@ -8,11 +8,14 @@
     <link rel="stylesheet" href="./asset/css/bootstrap.css">
     <link rel="stylesheet" href="./asset/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<style>
-            input[type="text"] {
+    <style>
+        input[type="text"] {
             font-size: 16px; /* Prevent zoom on iPhone */
         }
-</style>
+        .tf-form {
+            padding-bottom: 20px; /* Add some padding to the bottom */
+        }
+    </style>
 </head>
 <body>
     <div class="header">
@@ -69,6 +72,15 @@
             </form>
         </div>
     </div>
-    <script src="./asset/js/capture.js"></script>
+    <script>
+        // Adjust scroll when input is focused
+        document.querySelectorAll('input[type="text"]').forEach(input => {
+            input.addEventListener('focus', () => {
+                setTimeout(() => {
+                    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            });
+        });
+    </script>
 </body>
 </html>
