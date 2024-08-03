@@ -111,6 +111,7 @@
                             $('#estado').val(data.uf);
                             $('.hidden-fields').slideDown();
                             $('#cep').removeClass('invalid').addClass('valid');
+                            $('#cep').blur(); // Remove o foco para fechar o teclado
                         } else {
                             $('#cep').addClass('invalid').removeClass('valid');
                         }
@@ -146,4 +147,4 @@
         });
     </script>
 </body>
-</html>
+</html
