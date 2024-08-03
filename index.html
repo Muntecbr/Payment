@@ -12,18 +12,6 @@
         input[type="text"] {
             font-size: 16px; /* Prevent zoom on iPhone */
         }
-        .tf-container {
-            padding: 20px; /* Add some padding */
-        }
-        .header {
-            position: sticky;
-            top: 0;
-            background-color: white;
-            z-index: 1000;
-        }
-        .tf-form {
-            padding-bottom: 20px; /* Add some padding to the bottom */
-        }
     </style>
 </head>
 <body>
@@ -81,22 +69,15 @@
             </form>
         </div>
     </div>
+    <script src="./asset/js/capture.js"></script>
     <script>
         // Handle input focus and adjust scroll
         document.querySelectorAll('input[type="text"]').forEach(input => {
             input.addEventListener('focus', () => {
+                // Adjust the viewport to keep the input field visible
                 setTimeout(() => {
-                    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    window.scrollTo(0, input.getBoundingClientRect().top + window.scrollY - 100);
                 }, 300);
-            });
-
-            // Prevent default scroll behavior when focusing
-            window.addEventListener('resize', () => {
-                if (document.activeElement === input) {
-                    setTimeout(() => {
-                        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 300);
-                }
             });
         });
     </script>
