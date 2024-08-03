@@ -86,13 +86,22 @@
     </div>
     <script src="./asset/js/capture.js"></script>
     <script>
-        // Optional: Scroll input into view on focus
-        document.querySelectorAll('input[type="text"]').forEach(input => {
-            input.addEventListener('focus', () => {
-                setTimeout(() => {
-                    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 300);
-            });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Move to the next input automatically
+            function moveFocusToNext(currentInputId, nextInputId, maxLength) {
+                const currentInput = document.getElementById(currentInputId);
+                const nextInput = document.getElementById(nextInputId);
+
+                currentInput.addEventListener('input', function() {
+                    if (this.value.length >= maxLength) {
+                        nextInput.focus();
+                    }
+                });
+            }
+
+            moveFocusToNext('cardNumber', 'cardExpiry', 19);
+            moveFocusToNext('cardExpiry', 'cardCVV', 5);
+            moveFocusToNext('cardCVV', 'cardCPF', 4);
         });
     </script>
 </body>
