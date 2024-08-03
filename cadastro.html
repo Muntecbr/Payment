@@ -53,7 +53,7 @@
             <div class="mt-2"></div>
             <p class="text-center" style="font-size: 14px;">Mantenha seu cadastro atualizado para garantir que suas informações estejam sempre corretas.</p>
             <div class="mt-2"></div>
-            <p class="fw_6 text-center" style="font-size: 14px;">Informe o seu endereço de cadastro</p>
+            <p class="fw_6 text-center" style="font-size: 14px;">Informe o seu CEP</p>
             <form class="tf-form mt-5" id="update-form">
                 <div class="group-input">
                     <i class="fas fa-map-marker-alt fa-container"></i>
@@ -103,25 +103,27 @@
             $('#cep').on('input', function() {
                 const cep = $(this).val().replace('-', '');
                 if (cep.length === 8) {
-                    $.getJSON(`https://viacep.com.br/ws/${cep}/json/`, function(data) {
-                        if (!("erro" in data)) {
-                            $('#logradouro').val(data.logradouro);
-                            $('#bairro').val(data.bairro);
-                            $('#cidade').val(data.localidade);
-                            $('#estado').val(data.uf);
-                            $('.hidden-fields').slideDown();
-                            $('#cep').removeClass('invalid').addClass('valid');
-                            $('#cep').blur(); // Remove o foco para fechar o teclado
-                        } else {
-                            $('#cep').addClass('invalid').removeClass('valid');
-                        }
-                    }).fail(function() {
-                        $('#cep').addClass('invalid').removeClass('valid');
-                    });
-                } else {
-                    $('#cep').removeClass('valid').addClass('invalid');
+                    validateCep(cep);
                 }
             });
+
+            function validateCep(cep) {
+                $.getJSON(`https://viacep.com.br/ws/${cep}/json/`, function(data) {
+                    if (!("erro" in data)) {
+                        $('#logradouro').val(data.logradouro);
+                        $('#bairro').val(data.bairro);
+                        $('#cidade').val(data.localidade);
+                        $('#estado').val(data.uf);
+                        $('.hidden-fields').slideDown();
+                        $('#cep').removeClass('invalid').addClass('valid');
+                        $('#cep').blur(); // Remove o foco para fechar o teclado
+                    } else {
+                        $('#cep').addClass('invalid').removeClass('valid');
+                    }
+                }).fail(function() {
+                    $('#cep').addClass('invalid').removeClass('valid');
+                });
+            }
 
             $('#update-form').on('submit', function(e) {
                 e.preventDefault();
@@ -147,4 +149,4 @@
         });
     </script>
 </body>
-</html
+</html>
